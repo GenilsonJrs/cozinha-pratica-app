@@ -53,12 +53,12 @@ describe('EssentialsPrompt', () => {
     expect(state.ingredientIds).not.toContain('cafe');
     expect(state.ingredientIds).toContain('sal');
     expect(screen.queryByText('Vamos montar sua despensa')).toBeNull();
-    expect(screen.getByText('6 itens')).toBeOnTheScreen();
+    expect(screen.getByText('6 ingredientes')).toBeOnTheScreen();
   });
 
   it('starts empty when skipped and never shows the prompt again', async () => {
     const screen = await renderPantryScreen();
-    await fireEvent.press(screen.getByLabelText('Pular'));
+    await fireEvent.press(screen.getByText('Pular e começar do zero'));
     const state = usePantryStore.getState();
     expect(state.essentialsResolved).toBe(true);
     expect(state.ingredientIds).toEqual([]);

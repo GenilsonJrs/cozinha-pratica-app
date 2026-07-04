@@ -1,15 +1,19 @@
 import { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+
+import { Button } from '@/components/ui/button';
+import { ListRow } from '@/components/ui/list-row';
+import { Screen } from '@/components/ui/screen';
+import { spacing } from '@/theme/spacing';
+import { typography } from '@/theme/typography';
+import { useTheme } from '@/theme/use-theme';
 
 import { ingredientsByIds } from '../categories';
 import { essentialIngredientIds } from '../essentials';
 import { usePantryStore } from '../pantry-store';
-import { IngredientRow } from './ingredient-row';
-import { PrimaryButton } from './primary-button';
 
 export function EssentialsPrompt() {
-  const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
   const resolveEssentials = usePantryStore((state) => state.resolveEssentials);
   const [selectedIds, setSelectedIds] = useState(() => new Set(essentialIngredientIds));
 
@@ -28,21 +32,23 @@ export function EssentialsPrompt() {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 16 }]}>
-      <Text style={styles.title}>Vamos montar sua despensa</Text>
-      <Text style={styles.message}>
-        A maioria das cozinhas tem estes itens básicos. Desmarque o que você não tem — dá para
-        ajustar tudo depois.
+    <Screen>
+      <Text style={[typography.screenTitle, { color: colors.textPrimary }]}>
+        Vamos montar sua despensa
+      </Text>
+      <Text style={[typography.body, styles.message, { color: colors.textSecondary }]}>
+        Quase toda cozinha tem estes básicos. Desmarque o que faltar por aí — dá para ajustar quando
+        quiser.
       </Text>
       <ScrollView contentContainerStyle={styles.list}>
         {essentials.map((ingredient) => {
           const isSelected = selectedIds.has(ingredient.id);
           return (
-            <IngredientRow
+            <ListRow
               key={ingredient.id}
-              name={ingredient.name}
+              title={ingredient.name}
               iconName={isSelected ? 'checkmark-circle' : 'ellipse-outline'}
-              iconColor={isSelected ? '#16A34A' : '#9CA3AF'}
+              iconColor={isSelected ? colors.success : colors.textSecondary}
               accessibilityLabel={
                 isSelected ? `Desmarcar ${ingredient.name}` : `Marcar ${ingredient.name}`
               }
@@ -52,51 +58,30 @@ export function EssentialsPrompt() {
         })}
       </ScrollView>
       <View style={styles.actions}>
-        <PrimaryButton
+        <Button
           label={`Confirmar (${selectedIds.size})`}
           onPress={() => resolveEssentials([...selectedIds])}
         />
-        <Pressable
-          accessibilityRole="button"
-          accessibilityLabel="Pular"
+        <Button
+          label="Pular e começar do zero"
+          variant="ghost"
           onPress={() => resolveEssentials([])}
-          style={styles.skipButton}
-        >
-          <Text style={styles.skipLabel}>Pular e começar do zero</Text>
-        </Pressable>
+        />
       </View>
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
   message: {
-    fontSize: 15,
-    color: '#6B7280',
-    marginTop: 8,
-    marginBottom: 16,
+    marginTop: spacing.sm,
+    marginBottom: spacing.lg,
   },
   list: {
-    paddingBottom: 16,
+    paddingBottom: spacing.lg,
   },
   actions: {
-    gap: 8,
-    paddingBottom: 24,
-  },
-  skipButton: {
-    paddingVertical: 10,
-  },
-  skipLabel: {
-    fontSize: 15,
-    color: '#6B7280',
-    textAlign: 'center',
+    gap: spacing.sm,
+    paddingBottom: spacing.xl,
   },
 });

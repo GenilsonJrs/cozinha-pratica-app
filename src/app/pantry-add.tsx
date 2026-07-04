@@ -1,13 +1,19 @@
 import { useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
+import { EmptyState } from '@/components/ui/empty-state';
+import { ListRow } from '@/components/ui/list-row';
+import { Screen } from '@/components/ui/screen';
+import { SearchInput } from '@/components/ui/search-input';
+import { Section } from '@/components/ui/section';
 import { groupByCategory } from '@/features/pantry/categories';
-import { CategorySection } from '@/features/pantry/components/category-section';
-import { IngredientRow } from '@/features/pantry/components/ingredient-row';
 import { usePantryStore } from '@/features/pantry/pantry-store';
 import { searchCatalog } from '@/features/pantry/search';
+import { spacing } from '@/theme/spacing';
+import { useTheme } from '@/theme/use-theme';
 
 export default function PantryAddScreen() {
+  const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const ingredientIds = usePantryStore((state) => state.ingredientIds);
   const add = usePantryStore((state) => state.add);
@@ -25,35 +31,31 @@ export default function PantryAddScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Buscar ingrediente (ex.: tomate)"
+    <Screen withTopInset={false}>
+      <SearchInput
         value={query}
         onChangeText={setQuery}
-        autoCorrect={false}
-        autoCapitalize="none"
+        placeholder="Buscar ingrediente (ex.: tomate)"
         accessibilityLabel="Buscar ingrediente"
       />
       {groups.length === 0 ? (
-        <View style={styles.emptyState}>
-          <Text style={styles.emptyTitle}>Nenhum ingrediente encontrado</Text>
-          <Text style={styles.emptyMessage}>
-            Esse ingrediente ainda não está no catálogo do Cozinha Prática.
-          </Text>
-        </View>
+        <EmptyState
+          emoji="🔍"
+          title="Nenhum ingrediente encontrado"
+          message="Esse ainda não está no nosso catálogo — ele cresce a cada versão."
+        />
       ) : (
         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.list}>
           {groups.map((group) => (
-            <CategorySection key={group.category} title={group.title}>
+            <Section key={group.category} title={group.title}>
               {group.ingredients.map((ingredient) => {
                 const isSelected = selectedIds.has(ingredient.id);
                 return (
-                  <IngredientRow
+                  <ListRow
                     key={ingredient.id}
-                    name={ingredient.name}
+                    title={ingredient.name}
                     iconName={isSelected ? 'checkmark-circle' : 'add-circle-outline'}
-                    iconColor={isSelected ? '#16A34A' : '#9CA3AF'}
+                    iconColor={isSelected ? colors.success : colors.textSecondary}
                     accessibilityLabel={
                       isSelected ? `Remover ${ingredient.name}` : `Adicionar ${ingredient.name}`
                     }
@@ -61,45 +63,17 @@ export default function PantryAddScreen() {
                   />
                 );
               })}
-            </CategorySection>
+            </Section>
           ))}
         </ScrollView>
       )}
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 16,
-  },
-  searchInput: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    marginBottom: 16,
-  },
   list: {
-    paddingBottom: 24,
-  },
-  emptyState: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    padding: 24,
-  },
-  emptyTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  emptyMessage: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: '#6B7280',
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xl,
   },
 });

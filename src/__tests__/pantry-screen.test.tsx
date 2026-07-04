@@ -49,7 +49,7 @@ describe('PantryScreen', () => {
   it('groups ingredients by category with a total counter', async () => {
     setPantry(['tomate', 'cebola', 'leite']);
     const screen = await renderPantryScreen();
-    expect(screen.getByText('3 itens')).toBeOnTheScreen();
+    expect(screen.getByText('3 ingredientes')).toBeOnTheScreen();
     expect(screen.getByText('Hortifrúti')).toBeOnTheScreen();
     expect(screen.getByText('Laticínios e ovos')).toBeOnTheScreen();
     expect(screen.getByText('Tomate')).toBeOnTheScreen();
@@ -59,7 +59,7 @@ describe('PantryScreen', () => {
   it('uses the singular label for a single item', async () => {
     setPantry(['tomate']);
     const screen = await renderPantryScreen();
-    expect(screen.getByText('1 item')).toBeOnTheScreen();
+    expect(screen.getByText('1 ingrediente')).toBeOnTheScreen();
   });
 
   it('removes an ingredient when its row is pressed', async () => {
