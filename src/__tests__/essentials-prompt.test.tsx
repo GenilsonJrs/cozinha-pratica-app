@@ -1,11 +1,15 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import PantryScreen from '../app/(tabs)/pantry';
 import { usePantryStore } from '../features/pantry/pantry-store';
 
+const mockUseEffect = useEffect;
+
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: jest.fn() }),
+  useFocusEffect: (effect: () => void) => mockUseEffect(effect, [effect]),
 }));
 
 const initialMetrics = {
@@ -63,7 +67,7 @@ describe('EssentialsPrompt', () => {
     expect(state.essentialsResolved).toBe(true);
     expect(state.ingredientIds).toEqual([]);
     expect(screen.queryByText('Vamos montar sua despensa')).toBeNull();
-    expect(screen.getByText('Sua despensa está vazia')).toBeOnTheScreen();
+    expect(screen.getByText('Vamos encher essa despensa?')).toBeOnTheScreen();
   });
 
   it('does not reappear after the pantry is cleared', async () => {
@@ -71,7 +75,7 @@ describe('EssentialsPrompt', () => {
     usePantryStore.getState().clear();
     const screen = await renderPantryScreen();
     expect(screen.queryByText('Vamos montar sua despensa')).toBeNull();
-    expect(screen.getByText('Sua despensa está vazia')).toBeOnTheScreen();
+    expect(screen.getByText('Vamos encher essa despensa?')).toBeOnTheScreen();
   });
 
   it('is not shown before hydration completes', async () => {

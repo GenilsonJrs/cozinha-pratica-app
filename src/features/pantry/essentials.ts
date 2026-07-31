@@ -1,3 +1,28 @@
+export const commonIngredientIds: string[] = [
+  'arroz-branco',
+  'feijao-carioca',
+  'ovo',
+  'oleo-de-soja',
+  'sal',
+  'alho',
+  'cebola',
+  'tomate',
+  'batata',
+  'cenoura',
+  'macarrao-espaguete',
+  'farinha-de-trigo',
+  'acucar',
+  'cafe',
+  'leite',
+  'manteiga',
+  'queijo-mussarela',
+  'peito-de-frango',
+  'carne-moida',
+  'pao-frances',
+  'banana',
+  'limao',
+];
+
 export const essentialIngredientIds: string[] = [
   'sal',
   'acucar',

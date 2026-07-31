@@ -54,6 +54,9 @@ export default function RootLayout() {
             headerShown: true,
             title: 'Adicionar ingredientes',
             headerTitleStyle: { fontFamily: fonts.bold },
+            animation: 'slide_from_bottom',
+            animationDuration: 320,
+            gestureEnabled: true,
           }}
         />
       </Stack>

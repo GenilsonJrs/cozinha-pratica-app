@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/ui/button';
+import { FadeIn } from '@/components/ui/fade-in';
 import { LoadingView } from '@/components/ui/loading-view';
 import { Screen } from '@/components/ui/screen';
 import { greetingForHour } from '@/features/home/greeting';
@@ -34,25 +35,37 @@ export default function HomeScreen() {
 
   return (
     <Screen>
-      <Text style={[typography.screenTitle, { color: colors.textPrimary }]}>
-        {greetingForHour(new Date().getHours())}
-      </Text>
-      <Text style={[typography.body, styles.subtitle, { color: colors.textSecondary }]}>
-        O que vamos cozinhar hoje?
-      </Text>
-      <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>🧺 Sua despensa</Text>
-        <Text style={[typography.body, styles.cardBody, { color: colors.textSecondary }]}>
-          {pantrySummary}
+      <FadeIn>
+        <Text style={[typography.screenTitle, { color: colors.textPrimary }]}>
+          {greetingForHour(new Date().getHours())}
         </Text>
-        <Button label="Adicionar ingredientes" onPress={() => router.push('/pantry-add')} />
-      </View>
-      <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-        <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>🍲 Receitas em breve</Text>
-        <Text style={[typography.body, styles.cardBody, { color: colors.textSecondary }]}>
-          Logo o app vai sugerir receitas com o que você já tem em casa. É o próximo passo!
+      </FadeIn>
+      <FadeIn delay={90}>
+        <Text style={[typography.body, styles.subtitle, { color: colors.textSecondary }]}>
+          O que vamos cozinhar hoje?
         </Text>
-      </View>
+      </FadeIn>
+      <FadeIn delay={190} distance={26} scaleFrom={0.96}>
+        <View
+          style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+        >
+          <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>🧺 Sua despensa</Text>
+          <Text style={[typography.body, styles.cardBody, { color: colors.textSecondary }]}>
+            {pantrySummary}
+          </Text>
+          <Button label="Adicionar ingredientes" onPress={() => router.push('/pantry-add')} />
+        </View>
+      </FadeIn>
+      <FadeIn delay={300} distance={26} scaleFrom={0.96}>
+        <View
+          style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+        >
+          <Text style={[styles.cardTitle, { color: colors.textPrimary }]}>🍲 Receitas em breve</Text>
+          <Text style={[typography.body, styles.cardBody, { color: colors.textSecondary }]}>
+            Logo o app vai sugerir receitas com o que você já tem em casa. É o próximo passo!
+          </Text>
+        </View>
+      </FadeIn>
     </Screen>
   );
 }

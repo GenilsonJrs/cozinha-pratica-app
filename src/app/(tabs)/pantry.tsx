@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { useMemo } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { useCallback, useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import { EmptyPantryIllustration } from '@/components/illustrations/empty-pantry';
 import { EmptyState } from '@/components/ui/empty-state';
-import { ListRow } from '@/components/ui/list-row';
+import { FadeIn } from '@/components/ui/fade-in';
+import { PantryRow } from '@/features/pantry/components/pantry-row';
 import { LoadingView } from '@/components/ui/loading-view';
 import { Screen } from '@/components/ui/screen';
 import { Section } from '@/components/ui/section';
@@ -12,7 +14,7 @@ import { groupByCategory, ingredientsByIds } from '@/features/pantry/categories'
 import { EssentialsPrompt } from '@/features/pantry/components/essentials-prompt';
 import { usePantryStore } from '@/features/pantry/pantry-store';
 import { spacing } from '@/theme/spacing';
-import { typography } from '@/theme/typography';
+import { fonts, typography } from '@/theme/typography';
 import { useTheme } from '@/theme/use-theme';
 
 export default function PantryScreen() {
@@ -23,6 +25,17 @@ export default function PantryScreen() {
   const essentialsResolved = usePantryStore((state) => state.essentialsResolved);
   const remove = usePantryStore((state) => state.remove);
   const clear = usePantryStore((state) => state.clear);
+  const quantities = usePantryStore((state) => state.quantities);
+  const increment = usePantryStore((state) => state.increment);
+  const decrement = usePantryStore((state) => state.decrement);
+
+  const [revealKey, setRevealKey] = useState(0);
+
+  useFocusEffect(
+    useCallback(() => {
+      setRevealKey((current) => current + 1);
+    }, [])
+  );
 
   const groups = useMemo(() => groupByCategory(ingredientsByIds(ingredientIds)), [ingredientIds]);
   const itemCount = ingredientIds.length;
@@ -51,52 +64,57 @@ export default function PantryScreen() {
           <Text style={[typography.screenTitle, { color: colors.textPrimary }]}>Despensa</Text>
           <Text style={[typography.caption, { color: colors.textSecondary }]}>{counterLabel}</Text>
         </View>
-        <View style={styles.headerActions}>
-          {itemCount > 0 && (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityLabel="Esvaziar despensa"
-              onPress={confirmClear}
-              hitSlop={spacing.md}
-              style={styles.headerButton}
-            >
-              <Ionicons name="trash-outline" size={24} color={colors.danger} />
-            </Pressable>
-          )}
+        {itemCount > 0 && (
           <Pressable
             accessibilityRole="button"
-            accessibilityLabel="Adicionar ingredientes"
-            onPress={openAddModal}
+            accessibilityLabel="Esvaziar despensa"
+            onPress={confirmClear}
             hitSlop={spacing.md}
             style={styles.headerButton}
           >
-            <Ionicons name="add-circle" size={30} color={colors.primary} />
+            <Ionicons name="trash-outline" size={24} color={colors.danger} />
           </Pressable>
-        </View>
+        )}
       </View>
+
+      {itemCount > 0 && (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Adicionar ingredientes"
+          onPress={openAddModal}
+          style={[styles.addBar, { backgroundColor: colors.primary }]}
+        >
+          <Ionicons name="add" size={22} color={colors.onPrimary} />
+          <Text style={[styles.addBarLabel, { color: colors.onPrimary }]}>
+            Adicionar ingredientes
+          </Text>
+        </Pressable>
+      )}
       {itemCount === 0 ? (
         <EmptyState
-          emoji="🧺"
-          title="Sua despensa está vazia"
-          message="Marque o que você tem em casa e a gente te mostra o que dá para cozinhar."
+          illustration={<EmptyPantryIllustration />}
+          title="Vamos encher essa despensa?"
+          message="Adicione o que você já tem em casa — mesmo que sejam só três ingredientes."
           actionLabel="Adicionar ingredientes"
           onActionPress={openAddModal}
         />
       ) : (
         <ScrollView contentContainerStyle={styles.list}>
-          {groups.map((group) => (
-            <Section key={group.category} title={group.title}>
-              {group.ingredients.map((ingredient) => (
-                <ListRow
-                  key={ingredient.id}
-                  title={ingredient.name}
-                  iconName="close-circle-outline"
-                  iconColor={colors.textSecondary}
-                  accessibilityLabel={`Remover ${ingredient.name}`}
-                  onPress={() => remove(ingredient.id)}
-                />
-              ))}
-            </Section>
+          {groups.map((group, index) => (
+            <FadeIn key={`${group.category}-${revealKey}`} delay={index * 70} distance={22}>
+              <Section title={group.title}>
+                {group.ingredients.map((ingredient) => (
+                  <PantryRow
+                    key={ingredient.id}
+                    ingredient={ingredient}
+                    quantity={quantities[ingredient.id] ?? 1}
+                    onIncrement={() => increment(ingredient.id)}
+                    onDecrement={() => decrement(ingredient.id)}
+                    onRemove={() => remove(ingredient.id)}
+                  />
+                ))}
+              </Section>
+            </FadeIn>
           ))}
         </ScrollView>
       )}
@@ -111,13 +129,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: spacing.lg,
   },
-  headerActions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.md,
-  },
   headerButton: {
     padding: spacing.xs,
+  },
+  addBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: spacing.xs,
+    height: 48,
+    borderRadius: 24,
+    marginBottom: spacing.lg,
+  },
+  addBarLabel: {
+    fontSize: 15,
+    fontFamily: fonts.bold,
   },
   list: {
     paddingBottom: spacing.xl,

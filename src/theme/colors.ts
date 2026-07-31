@@ -28,6 +28,48 @@ export const lightColors: ThemeColors = {
   disabled: '#B4A79B',
 };
 
+export interface IllustrationColors {
+  terracottaFrom: string;
+  terracottaTo: string;
+  yolkFrom: string;
+  yolkTo: string;
+  discFrom: string;
+  discTo: string;
+  eggWhite: string;
+  outline: string;
+  green: string;
+  greenDeep: string;
+  shine: string;
+}
+
+export const lightIllustration: IllustrationColors = {
+  terracottaFrom: '#E0703F',
+  terracottaTo: '#A63C1B',
+  yolkFrom: '#F9CB6B',
+  yolkTo: '#E28C29',
+  discFrom: '#F7E8D3',
+  discTo: '#E8D2B4',
+  eggWhite: '#FDF6EF',
+  outline: '#3B2F2A',
+  green: '#3E6B4F',
+  greenDeep: '#2C5240',
+  shine: '#FFF8EE',
+};
+
+export const darkIllustration: IllustrationColors = {
+  terracottaFrom: '#FF8A5C',
+  terracottaTo: '#C4552C',
+  yolkFrom: '#F9CB6B',
+  yolkTo: '#E9A03C',
+  discFrom: '#3A2C24',
+  discTo: '#2A201B',
+  eggWhite: '#F3EAE2',
+  outline: '#C4B5A8',
+  green: '#8FC2A2',
+  greenDeep: '#5E9476',
+  shine: '#FFFFFF',
+};
+
 export const darkColors: ThemeColors = {
   background: '#1B1310',
   surface: '#2A201B',

@@ -25,18 +25,34 @@ Campus Barreiras, 2021). O protótipo original em Flutter está preservado em
 reescrita do produto com stack atual e processo de engenharia, com objetivo de chegar
 às lojas.
 
-### Funcionalidades planejadas (MVP)
+### Já funciona
+
+- Despensa pessoal persistida no aparelho, com catálogo de 126 ingredientes, busca que
+  ignora acentos e agrupamento por categoria
+- Quantidade por ingrediente: um toque adiciona, o contador aparece depois
+- Ícone próprio para cada ingrediente, composto a partir de formas e tons da marca
+- Tema claro e escuro, com contraste AA verificado por teste automatizado
+- Ilustrações e transições próprias nos estados vazios e na navegação
+
+### Em construção (MVP)
 
 - Busca de receitas pelos ingredientes disponíveis, ordenada por compatibilidade
-- Despensa pessoal persistida (o que você tem em casa)
 - Detalhe de receita com passo a passo, tempo e porções
 - Lista de compras gerada a partir dos ingredientes faltantes
 - Autenticação e perfil de usuário
+
+### Depois do MVP
+
+- Mapa de mercados próximos
+- Comparação de preços por produto e por compra completa
+- O que falta para uma receita e quanto custaria completar
 
 ## Stack
 
 - **React Native 0.86 + Expo SDK 57 + TypeScript (strict)**
 - **Expo Router** — navegação file-based
+- **Zustand** + AsyncStorage — estado e persistência local
+- **react-native-svg** — ícones e ilustrações vetoriais
 - **Supabase** (Postgres, Auth, Storage) — a integrar
 - Qualidade: **ESLint**, **Prettier**, **Jest** + React Native Testing Library
 
@@ -67,12 +83,40 @@ npm run format      # Prettier
 
 ```
 src/
-├── app/          # rotas (Expo Router, file-based)
-└── __tests__/    # testes
-assets/           # ícones, splash e imagens
+├── app/            # rotas (Expo Router, file-based)
+├── components/
+│   ├── illustrations/  # artes dos estados vazios (SVG)
+│   └── ui/             # biblioteca de componentes
+├── features/
+│   ├── home/
+│   └── pantry/         # catálogo, busca, store e ícones dos ingredientes
+├── hooks/
+├── theme/          # cores, tipografia, espaçamento e tons
+└── __tests__/      # testes
+assets/
+├── brand/          # SVGs da marca (fonte dos PNGs)
+└── images/         # ícone, splash e favicon gerados
+scripts/            # geração dos assets de marca
 ```
 
 Alias de import: `@/*` → `src/*`.
+
+## Design system
+
+Toda cor vem de `src/theme/` — um teste automatizado falha o CI se aparecer um literal de
+cor no restante do código. Isso mantém os dois temas consistentes e o contraste sob controle.
+
+Os ícones de ingrediente são compostos por **formas**
+(`src/components/ui/ingredient-icon.tsx`) combinadas com **tons da marca**
+(`src/theme/ingredient-tints.ts`), mapeados em
+`src/features/pantry/ingredient-icons.ts`. Ingrediente sem mapeamento cai no padrão da
+categoria, então o catálogo cresce sem quebrar nada.
+
+Para regerar o ícone do app e a splash a partir dos SVGs da marca:
+
+```bash
+node scripts/generate-icons.mjs
+```
 
 ## Autoria
 

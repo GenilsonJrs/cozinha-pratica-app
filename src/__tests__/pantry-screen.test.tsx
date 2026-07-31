@@ -1,12 +1,16 @@
 import { fireEvent, render } from '@testing-library/react-native';
+import { useEffect } from 'react';
 import { Alert } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import PantryScreen from '../app/(tabs)/pantry';
 import { usePantryStore } from '../features/pantry/pantry-store';
 
+const mockUseEffect = useEffect;
+
 jest.mock('expo-router', () => ({
   useRouter: () => ({ push: jest.fn() }),
+  useFocusEffect: (effect: () => void) => mockUseEffect(effect, [effect]),
 }));
 
 const initialMetrics = {
@@ -38,12 +42,12 @@ describe('PantryScreen', () => {
   it('shows a loading indicator before hydration', async () => {
     setPantry([], false);
     const screen = await renderPantryScreen();
-    expect(screen.queryByText('Sua despensa está vazia')).toBeNull();
+    expect(screen.queryByText('Vamos encher essa despensa?')).toBeNull();
   });
 
   it('shows the empty state when there are no ingredients', async () => {
     const screen = await renderPantryScreen();
-    expect(screen.getByText('Sua despensa está vazia')).toBeOnTheScreen();
+    expect(screen.getByText('Vamos encher essa despensa?')).toBeOnTheScreen();
   });
 
   it('groups ingredients by category with a total counter', async () => {
