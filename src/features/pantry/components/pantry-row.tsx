@@ -29,7 +29,7 @@ export function PantryRow({
 
   return (
     <View style={[styles.row, { borderBottomColor: colors.border }]}>
-      <IngredientIcon shape={icon.shape} tint={icon.tint} size={44} />
+      <IngredientIcon shape={icon.shape} tint={icon.tint} art={icon.art} size={44} />
 
       <Text numberOfLines={1} style={[styles.name, { color: colors.textPrimary }]}>
         {ingredient.name}

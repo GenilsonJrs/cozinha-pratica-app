@@ -2,12 +2,16 @@ import { StyleSheet, View } from 'react-native';
 import Svg, { Circle, Ellipse, G, Path, Rect } from 'react-native-svg';
 
 import { IconShape } from '@/features/pantry/ingredient-icons';
+import { ArtName } from '@/theme/ingredient-art';
 import { TintName } from '@/theme/ingredient-tints';
+
+import { IngredientArt } from './ingredient-art';
 import { useTheme } from '@/theme/use-theme';
 
 interface IngredientIconProps {
   shape: IconShape;
   tint: TintName;
+  art?: ArtName;
   size?: number;
 }
 
@@ -99,7 +103,10 @@ function Shape({ shape, color }: { shape: IconShape; color: string }) {
     case 'meat':
       return (
         <G>
-          <Path d="M12 28 C12 16 22 10 32 14 C40 18 40 32 32 38 C22 43 12 38 12 28 Z" fill={color} />
+          <Path
+            d="M12 28 C12 16 22 10 32 14 C40 18 40 32 32 38 C22 43 12 38 12 28 Z"
+            fill={color}
+          />
           <Ellipse cx={30} cy={26} rx={5} ry={6} fill={color} opacity={0.4} />
         </G>
       );
@@ -139,7 +146,10 @@ function Shape({ shape, color }: { shape: IconShape; color: string }) {
     case 'bread':
       return (
         <G>
-          <Path d="M10 32 C10 20 16 14 24 14 C32 14 38 20 38 32 C38 35 10 35 10 32 Z" fill={color} />
+          <Path
+            d="M10 32 C10 20 16 14 24 14 C32 14 38 20 38 32 C38 35 10 35 10 32 Z"
+            fill={color}
+          />
           <Path
             d="M16 22 L20 18 M23 21 L27 17 M30 22 L33 19"
             stroke={color}
@@ -195,19 +205,28 @@ function Shape({ shape, color }: { shape: IconShape; color: string }) {
   }
 }
 
-export function IngredientIcon({ shape, tint, size = 48 }: IngredientIconProps) {
-  const { tints } = useTheme();
-  const palette = tints[tint];
+export function IngredientIcon({ shape, tint, art, size = 48 }: IngredientIconProps) {
+  const theme = useTheme();
+  const palette = theme.tints[tint];
 
   return (
     <View
       style={[
         styles.tile,
-        { width: size, height: size, borderRadius: size * 0.3, backgroundColor: palette.background },
+        {
+          width: size,
+          height: size,
+          borderRadius: size * 0.3,
+          backgroundColor: palette.background,
+        },
       ]}
     >
       <Svg width={size * 0.72} height={size * 0.72} viewBox="0 0 48 48">
-        <Shape shape={shape} color={palette.foreground} />
+        {art ? (
+          <IngredientArt name={art} palettes={theme.art} />
+        ) : (
+          <Shape shape={shape} color={palette.foreground} />
+        )}
       </Svg>
     </View>
   );

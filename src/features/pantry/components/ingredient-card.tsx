@@ -47,7 +47,7 @@ export function IngredientCard({
         }
         style={styles.body}
       >
-        <IngredientIcon shape={icon.shape} tint={icon.tint} size={52} />
+        <IngredientIcon shape={icon.shape} tint={icon.tint} art={icon.art} size={52} />
         <Text numberOfLines={2} style={[styles.name, { color: colors.textPrimary }]}>
           {ingredient.name}
         </Text>

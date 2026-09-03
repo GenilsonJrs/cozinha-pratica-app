@@ -8,6 +8,7 @@ import {
   lightIllustration,
   ThemeColors,
 } from './colors';
+import { ArtPalettes, darkArt, lightArt } from './ingredient-art';
 import { darkTints, lightTints, Tint, TintName } from './ingredient-tints';
 
 export interface Theme {
@@ -15,6 +16,7 @@ export interface Theme {
   colors: ThemeColors;
   illustration: IllustrationColors;
   tints: Record<TintName, Tint>;
+  art: ArtPalettes;
 }
 
 export function themeForScheme(scheme: ColorSchemeName | null | undefined): Theme {
@@ -24,6 +26,7 @@ export function themeForScheme(scheme: ColorSchemeName | null | undefined): Them
       colors: darkColors,
       illustration: darkIllustration,
       tints: darkTints,
+      art: darkArt,
     };
   }
   return {
@@ -31,6 +34,7 @@ export function themeForScheme(scheme: ColorSchemeName | null | undefined): Them
     colors: lightColors,
     illustration: lightIllustration,
     tints: lightTints,
+    art: lightArt,
   };
 }
 

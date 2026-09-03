@@ -1,3 +1,4 @@
+import { ArtName } from '@/theme/ingredient-art';
 import { TintName } from '@/theme/ingredient-tints';
 
 import { IngredientCategory } from './types';
@@ -23,6 +24,7 @@ export type IconShape =
 export interface IngredientIcon {
   shape: IconShape;
   tint: TintName;
+  art?: ArtName;
 }
 
 const byCategory: Record<IngredientCategory, IngredientIcon> = {
@@ -37,12 +39,12 @@ const byCategory: Record<IngredientCategory, IngredientIcon> = {
 };
 
 const byIngredient: Record<string, IngredientIcon> = {
-  tomate: { shape: 'round', tint: 'tomato' },
-  cebola: { shape: 'round', tint: 'cream' },
-  alho: { shape: 'round', tint: 'cream' },
-  batata: { shape: 'round', tint: 'grain' },
+  tomate: { shape: 'round', tint: 'tomato', art: 'tomate' },
+  cebola: { shape: 'round', tint: 'cream', art: 'cebola' },
+  alho: { shape: 'round', tint: 'cream', art: 'alho' },
+  batata: { shape: 'round', tint: 'grain', art: 'batata' },
   'batata-doce': { shape: 'root', tint: 'carrot' },
-  cenoura: { shape: 'root', tint: 'carrot' },
+  cenoura: { shape: 'root', tint: 'carrot', art: 'cenoura' },
   mandioca: { shape: 'root', tint: 'grain' },
   abobrinha: { shape: 'long', tint: 'leaf' },
   abobora: { shape: 'round', tint: 'carrot' },
@@ -63,7 +65,7 @@ const byIngredient: Record<string, IngredientIcon> = {
   gengibre: { shape: 'root', tint: 'grain' },
   limao: { shape: 'round', tint: 'leaf' },
   laranja: { shape: 'round', tint: 'carrot' },
-  banana: { shape: 'long', tint: 'yolk' },
+  banana: { shape: 'long', tint: 'yolk', art: 'banana' },
   maca: { shape: 'round', tint: 'tomato' },
   mamao: { shape: 'round', tint: 'carrot' },
   abacaxi: { shape: 'round', tint: 'yolk' },
@@ -90,10 +92,10 @@ const byIngredient: Record<string, IngredientIcon> = {
   sardinha: { shape: 'fish', tint: 'cream' },
   camarao: { shape: 'fish', tint: 'carrot' },
 
-  'arroz-branco': { shape: 'bag', tint: 'cream' },
-  'arroz-integral': { shape: 'bag', tint: 'grain' },
-  'feijao-carioca': { shape: 'bag', tint: 'grain' },
-  'feijao-preto': { shape: 'bag', tint: 'cocoa' },
+  'arroz-branco': { shape: 'bag', tint: 'cream', art: 'arroz' },
+  'arroz-integral': { shape: 'bag', tint: 'grain', art: 'arroz' },
+  'feijao-carioca': { shape: 'bag', tint: 'grain', art: 'feijao' },
+  'feijao-preto': { shape: 'bag', tint: 'cocoa', art: 'feijao' },
   lentilha: { shape: 'bag', tint: 'carrot' },
   'grao-de-bico': { shape: 'bag', tint: 'yolk' },
   'macarrao-espaguete': { shape: 'pasta', tint: 'yolk' },
@@ -107,14 +109,14 @@ const byIngredient: Record<string, IngredientIcon> = {
   quinoa: { shape: 'bag', tint: 'grain' },
   'milho-de-pipoca': { shape: 'bag', tint: 'yolk' },
 
-  ovo: { shape: 'egg', tint: 'yolk' },
-  leite: { shape: 'bottle', tint: 'cream' },
+  ovo: { shape: 'egg', tint: 'yolk', art: 'ovo' },
+  leite: { shape: 'bottle', tint: 'cream', art: 'leite' },
   manteiga: { shape: 'cheese', tint: 'yolk' },
   margarina: { shape: 'cheese', tint: 'yolk' },
-  'queijo-mussarela': { shape: 'cheese', tint: 'yolk' },
-  'queijo-prato': { shape: 'cheese', tint: 'yolk' },
-  'queijo-parmesao': { shape: 'cheese', tint: 'grain' },
-  'queijo-minas': { shape: 'cheese', tint: 'cream' },
+  'queijo-mussarela': { shape: 'cheese', tint: 'yolk', art: 'queijo' },
+  'queijo-prato': { shape: 'cheese', tint: 'yolk', art: 'queijo' },
+  'queijo-parmesao': { shape: 'cheese', tint: 'grain', art: 'queijo' },
+  'queijo-minas': { shape: 'cheese', tint: 'cream', art: 'queijo' },
   requeijao: { shape: 'jar', tint: 'cream' },
   'creme-de-leite': { shape: 'can', tint: 'cream' },
   'leite-condensado': { shape: 'can', tint: 'cream' },
@@ -163,7 +165,7 @@ const byIngredient: Record<string, IngredientIcon> = {
   'fermento-em-po': { shape: 'bag', tint: 'cream' },
   'massa-de-pastel': { shape: 'bag', tint: 'cream' },
 
-  cafe: { shape: 'cup', tint: 'cocoa' },
+  cafe: { shape: 'cup', tint: 'cocoa', art: 'cafe' },
   'cha-mate': { shape: 'cup', tint: 'grain' },
   'achocolatado-em-po': { shape: 'bag', tint: 'cocoa' },
   refrigerante: { shape: 'bottle', tint: 'cocoa' },
