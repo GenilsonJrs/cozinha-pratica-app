@@ -15,6 +15,10 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white" />
 </p>
 
+<p align="center">
+  <b><a href="https://genilsonjrs.github.io/cozinha-pratica-app/">Documentação do projeto</a></b>
+</p>
+
 ---
 
 ## Sobre o projeto

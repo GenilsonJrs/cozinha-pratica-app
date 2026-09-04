@@ -1,0 +1,91 @@
+site_name: Cozinha Prática
+site_description: App mobile que sugere receitas com os ingredientes que você já tem em casa.
+site_author: Genilson Silva de Araújo Junior
+site_url: https://genilsonjrs.github.io/cozinha-pratica-app/
+repo_url: https://github.com/GenilsonJrs/cozinha-pratica-app
+repo_name: GenilsonJrs/cozinha-pratica-app
+edit_uri: edit/main/docs/
+copyright: Genilson Silva de Araújo Junior
+
+theme:
+  name: material
+  language: pt-BR
+  logo: assets/glyph-mono.svg
+  favicon: assets/favicon.png
+  font:
+    text: Nunito
+    code: Roboto Mono
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Mudar para o tema escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Mudar para o tema claro
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.footer
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+extra_css:
+  - assets/extra.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search:
+      lang: pt
+
+nav:
+  - Início: index.md
+  - Produto:
+      - Visão: produto/visao.md
+      - Escopo e roadmap: produto/roadmap.md
+      - Pesquisa e origem: produto/origem.md
+  - Funcionalidades:
+      - Visão geral: funcionalidades/index.md
+      - Despensa: funcionalidades/despensa.md
+      - Receitas: funcionalidades/receitas.md
+      - Identidade visual: funcionalidades/identidade-visual.md
+  - Técnico:
+      - Arquitetura: tecnico/arquitetura.md
+      - Stack: tecnico/stack.md
+      - Qualidade: tecnico/qualidade.md
+      - Como rodar: tecnico/como-rodar.md
+  - Processo:
+      - Metodologia: processo/metodologia.md
+      - Decisões: processo/decisoes.md
+  - Equipe: equipe.md
