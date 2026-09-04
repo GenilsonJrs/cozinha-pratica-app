@@ -9,8 +9,8 @@ hide:
 
 <div class="person-grid" markdown>
 <div class="person-card" markdown>
-![Genilson Silva de Araújo Junior](assets/genilson.jpg)
-<span class="person-name">Genilson Junior</span>
+![Genilson Silva de Araújo Júnior](assets/genilson.jpg)
+<span class="person-name">Genilson Júnior</span>
 <span class="person-role">Autor e desenvolvedor</span>
 </div>
 </div>

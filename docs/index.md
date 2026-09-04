@@ -83,7 +83,7 @@ Acompanhe o detalhamento em [Escopo e roadmap](produto/roadmap.md).
 ## Origem
 
 O projeto nasceu como **TCC do curso Técnico em Informática do IFBA — Campus Barreiras (2021)**,
-de Genilson Junior, orientado pelo professor Ricardo Sena. O protótipo original, em Flutter, não
+de Genilson Júnior, orientado pelo professor Ricardo Sena. O protótipo original, em Flutter, não
 foi concluído. Este repositório é a **continuação profissional** do trabalho: reescrita com
 stack atual, processo de engenharia e objetivo de chegar a um produto publicável.
 

@@ -124,4 +124,4 @@ node scripts/generate-icons.mjs
 
 ## Autoria
 
-**Genilson Junior** — [GenilsonJrs](https://github.com/GenilsonJrs)
+**Genilson Júnior** — [GenilsonJrs](https://github.com/GenilsonJrs)

@@ -3,7 +3,7 @@
 ## O TCC de 2021
 
 O Cozinha Prática nasceu como Trabalho de Conclusão de Curso do **Técnico em Informática do
-IFBA — Campus Barreiras**, defendido por Genilson Junior em 2021, sob orientação do professor
+IFBA — Campus Barreiras**, defendido por Genilson Júnior em 2021, sob orientação do professor
 **Ricardo Sena**.
 
 O protótipo original foi feito em Flutter 1.x e **não chegou a ser finalizado**. Este repositório
